@@ -110,7 +110,7 @@ public class MainActivity extends BaseGameActivity implements IOnAreaTouchListen
 
     @Override
     public Engine onCreateEngine(final EngineOptions pEngineOptions) {
-        return new FixedStepEngine(pEngineOptions, 60);
+        return new FixedStepEngine(pEngineOptions, 30);
     }
 
     @Override
