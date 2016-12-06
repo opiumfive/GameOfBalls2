@@ -1,4 +1,4 @@
-package com.opiumfive.gameofballs2;
+package com.opiumfive.gameofballs2.temp;
 
 import org.andengine.entity.scene.Scene;
 import org.andengine.input.touch.TouchEvent;
@@ -135,12 +135,12 @@ public class MainScene extends Scene {
 		case GAME:
 			if (keyCode == KeyEvent.KEYCODE_MENU){
 				if (MainActivity._main.p) {
-				//	MainActivity._main._MainScene._GameScene.clearChildScene();
+				//	MainActivity._main._MainScene.mMainGameScene.clearChildScene();
 				//	MainActivity._main.onResume();
 					} else {
 						
 					//	MainActivity._main.onPause();
-					//	MainActivity._main._MainScene._GameScene.setChildScene(MainActivity._main.mPauseScene, false, true, true);
+					//	MainActivity._main._MainScene.mMainGameScene.setChildScene(MainActivity._main.mPauseScene, false, true, true);
 					}
 			}
 			if (keyCode == KeyEvent.KEYCODE_BACK){

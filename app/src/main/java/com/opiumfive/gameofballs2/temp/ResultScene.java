@@ -1,4 +1,6 @@
-package com.opiumfive.gameofballs2;
+package com.opiumfive.gameofballs2.temp;
+
+import com.opiumfive.gameofballs2.temp.MainActivity;
 
 import org.andengine.entity.scene.CameraScene;
 import org.andengine.entity.scene.background.Background;

@@ -1,22 +1,30 @@
 package com.opiumfive.gameofballs2;
 
 
+import com.opiumfive.gameofballs2.managers.SceneManager;
+import com.opiumfive.gameofballs2.scenes.MainGameScene;
+import com.opiumfive.gameofballs2.temp.MainScene;
+
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.WakeLockOptions;
 import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
-import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
+import org.andengine.entity.scene.IOnAreaTouchListener;
+import org.andengine.entity.scene.IOnSceneTouchListener;
+import org.andengine.entity.scene.ITouchArea;
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.sprite.Sprite;
+import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
-import org.andengine.opengl.texture.atlas.bitmap.BuildableBitmapTextureAtlas;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 
-public class TestActivity extends SimpleBaseGameActivity {
+public class MainGameActivity extends SimpleBaseGameActivity implements IOnAreaTouchListener, IOnSceneTouchListener {
+
+    public static MainGameActivity mTestActivity;
     public static Camera camera;
     public static SceneManager mSceneManager;
     public static final int CAMERA_WIDTH = 800;
@@ -29,15 +37,15 @@ public class TestActivity extends SimpleBaseGameActivity {
     @Override
     protected void onCreateResources() {
         mBitmapTextureAtlas = new BitmapTextureAtlas(mEngine.getTextureManager(), 512, 512);
-        mCircle = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mBitmapTextureAtlas, this.getAssets(), "gfx/1.png", 0, 0);
+        mCircle = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mBitmapTextureAtlas, this.getAssets(), "gfx/2.png", 0, 0);
         mBitmapTextureAtlas.load();
     }
 
     @Override
     protected Scene onCreateScene() {
         mSceneManager = new SceneManager();
-        //scene.setBackground(new Background(0.09804f, 0.6274f, 0.8784f));
         vertexBufferObjectManager = getVertexBufferObjectManager();
+        mTestActivity = this;
         return mSceneManager;
     }
 
@@ -49,5 +57,31 @@ public class TestActivity extends SimpleBaseGameActivity {
         engineOptions.setWakeLockOptions(WakeLockOptions.SCREEN_ON);
 
         return engineOptions;
+    }
+
+    @Override
+    public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
+        if (pSceneTouchEvent.isActionDown()) {
+            switch (SceneManager.state) {
+                case SceneManager.GAME:
+                    // промахи
+                    break;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onAreaTouched(TouchEvent pSceneTouchEvent, ITouchArea pTouchArea, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+        if (pSceneTouchEvent.isActionDown()) {
+            switch (MainScene.state) {
+                case MainScene.GAME:
+                        MainGameScene.remove((Sprite) pTouchArea);
+                        break;
+            }
+            return true;
+        }
+        return false;
     }
 }

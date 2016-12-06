@@ -1,5 +1,8 @@
-package com.opiumfive.gameofballs2;
+package com.opiumfive.gameofballs2.scenes;
 
+
+import com.opiumfive.gameofballs2.MainGameActivity;
+import com.opiumfive.gameofballs2.temp.MainActivity;
 
 import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.engine.handler.timer.ITimerCallback;
@@ -14,18 +17,15 @@ import org.andengine.entity.particle.SpriteParticleSystem;
 import org.andengine.entity.particle.emitter.PointParticleEmitter;
 import org.andengine.entity.particle.initializer.VelocityParticleInitializer;
 import org.andengine.entity.particle.modifier.AlphaParticleModifier;
-import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.CameraScene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
-import org.andengine.entity.text.Text;
 import org.andengine.util.adt.color.Color;
 import org.andengine.util.math.MathUtils;
 import org.andengine.util.modifier.IModifier;
-import org.andengine.util.modifier.ease.EaseLinear;
 
-import static com.opiumfive.gameofballs2.TestActivity.CAMERA_HEIGHT;
-import static com.opiumfive.gameofballs2.TestActivity.CAMERA_WIDTH;
+import static com.opiumfive.gameofballs2.MainGameActivity.CAMERA_HEIGHT;
+import static com.opiumfive.gameofballs2.MainGameActivity.CAMERA_WIDTH;
 
 public class MainGameScene extends CameraScene {
 
@@ -47,7 +47,7 @@ public class MainGameScene extends CameraScene {
 
     public MainGameScene() {
 
-        super(TestActivity.camera);
+        super(MainGameActivity.camera);
         setBackgroundEnabled(true);
 
         setBackground(new Background(Color.BLACK));
@@ -71,6 +71,9 @@ public class MainGameScene extends CameraScene {
                 pItem.setCullingEnabled(true);
             }
         };
+
+        setOnAreaTouchListener(MainGameActivity.mTestActivity);
+        setOnSceneTouchListener(MainGameActivity.mTestActivity);
 
         scaling.addModifierListener(entityModifierListener);
 
@@ -109,11 +112,11 @@ public class MainGameScene extends CameraScene {
     }
 
     private void loadNewTexture(){
-        float width = TestActivity.mCircle.getWidth()/2.0f;
-        float height = TestActivity.mCircle.getHeight()/2.0f;
+        float width = MainGameActivity.mCircle.getWidth()/2.0f;
+        float height = MainGameActivity.mCircle.getHeight()/2.0f;
         final Sprite sprite = new Sprite(width +(CAMERA_WIDTH - width*2.0f)*MathUtils.RANDOM.nextFloat(),
-                height+(CAMERA_HEIGHT - height*2.0f)*MathUtils.RANDOM.nextFloat(), TestActivity.mCircle,
-                TestActivity.vertexBufferObjectManager);
+                height+(CAMERA_HEIGHT - height*2.0f)*MathUtils.RANDOM.nextFloat(), MainGameActivity.mCircle,
+                MainGameActivity.vertexBufferObjectManager);
         registerTouchArea(sprite);
         if (first) {sprite.registerEntityModifier(scaling); first=false;} else {
             scaling_copy=scaling.deepCopy();
@@ -145,15 +148,13 @@ public class MainGameScene extends CameraScene {
     }
 
     public static void remove(final Sprite face) {
-        MainActivity._main.streakText.setText("Streak: "+MainActivity._main.streak);
-        MainActivity._MainScene._GameScene.unregisterTouchArea(face);
+
+        //unregisterTouchArea(face);
         face.unregisterEntityModifier(scaling);
-        createExplosion(face.getX()+50,face.getY()+50);
+        //createExplosion(face.getX()+50,face.getY()+50);
         face.unregisterEntityModifier(scaling_copy);
         face.setIgnoreUpdate(true);
-        MainActivity._MainScene._GameScene.detachChild(face);
-
-        if (MainActivity._main.k==0) System.gc();
+        //detachChild(face);
     }
 
 

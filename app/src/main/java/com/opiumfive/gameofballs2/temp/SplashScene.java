@@ -1,4 +1,7 @@
-package com.opiumfive.gameofballs2;
+package com.opiumfive.gameofballs2.temp;
+
+import com.opiumfive.gameofballs2.temp.MainActivity;
+import com.opiumfive.gameofballs2.temp.MainScene;
 
 import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.AlphaModifier;
