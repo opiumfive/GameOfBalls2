@@ -2,7 +2,6 @@ package com.opiumfive.gameofballs2.scenes;
 
 
 import com.opiumfive.gameofballs2.MainGameActivity;
-import com.opiumfive.gameofballs2.temp.MainActivity;
 
 import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.engine.handler.timer.ITimerCallback;
@@ -103,7 +102,6 @@ public class MainGameScene extends CameraScene {
     }
 
     public void stopGame(){
-        MainActivity._main.countTime=false;
         detachChildren();
 
         clearUpdateHandlers();
@@ -126,7 +124,7 @@ public class MainGameScene extends CameraScene {
         attachChild(sprite);
     }
 
-    public static void createExplosion(float pos_x,float pos_y){
+    /*public static void createExplosion(float pos_x,float pos_y){
         PointParticleEmitter particleEmitter = new PointParticleEmitter(pos_x,pos_y);
 
         final ParticleSystem particleSystem = new SpriteParticleSystem(particleEmitter,100,100,10,
@@ -145,7 +143,7 @@ public class MainGameScene extends CameraScene {
                 MainActivity._MainScene._GameScene.unregisterUpdateHandler(pTimerHandler);
             }
         }));
-    }
+    }*/
 
     public static void remove(final Sprite face) {
 

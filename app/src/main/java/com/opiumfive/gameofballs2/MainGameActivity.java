@@ -3,7 +3,6 @@ package com.opiumfive.gameofballs2;
 
 import com.opiumfive.gameofballs2.managers.SceneManager;
 import com.opiumfive.gameofballs2.scenes.MainGameScene;
-import com.opiumfive.gameofballs2.temp.MainScene;
 
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.options.EngineOptions;
@@ -75,8 +74,8 @@ public class MainGameActivity extends SimpleBaseGameActivity implements IOnAreaT
     @Override
     public boolean onAreaTouched(TouchEvent pSceneTouchEvent, ITouchArea pTouchArea, float pTouchAreaLocalX, float pTouchAreaLocalY) {
         if (pSceneTouchEvent.isActionDown()) {
-            switch (MainScene.state) {
-                case MainScene.GAME:
+            switch (SceneManager.state) {
+                case SceneManager.GAME:
                         MainGameScene.remove((Sprite) pTouchArea);
                         break;
             }
