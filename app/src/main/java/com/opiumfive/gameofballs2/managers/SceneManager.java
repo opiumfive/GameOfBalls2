@@ -2,6 +2,7 @@ package com.opiumfive.gameofballs2.managers;
 
 import android.view.KeyEvent;
 
+import com.opiumfive.gameofballs2.MainGameActivity;
 import com.opiumfive.gameofballs2.scenes.MainGameScene;
 
 import org.andengine.entity.scene.Scene;
@@ -25,11 +26,11 @@ public class SceneManager extends Scene {
         state = GAME;
     }
 
-    @Override
+    /*@Override
     public boolean onSceneTouchEvent(TouchEvent pSceneTouchEvent) {
         switch (state) {
             case GAME:
-                mMainGameScene.onSceneTouchEvent(pSceneTouchEvent);
+                MainGameActivity.mTestActivity.onSceneTouchEvent(mMainGameScene, pSceneTouchEvent);
                 break;
         }
         return super.onSceneTouchEvent(pSceneTouchEvent);
@@ -46,6 +47,5 @@ public class SceneManager extends Scene {
                 }
                 break;
         }
-    }
-
+    }*/
 }

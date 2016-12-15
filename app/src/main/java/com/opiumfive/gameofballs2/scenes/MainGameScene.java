@@ -2,7 +2,6 @@ package com.opiumfive.gameofballs2.scenes;
 
 
 import com.opiumfive.gameofballs2.MainGameActivity;
-
 import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -11,18 +10,13 @@ import org.andengine.entity.modifier.IEntityModifier;
 import org.andengine.entity.modifier.MoveModifier;
 import org.andengine.entity.modifier.ScaleModifier;
 import org.andengine.entity.modifier.SequenceEntityModifier;
-import org.andengine.entity.particle.ParticleSystem;
-import org.andengine.entity.particle.SpriteParticleSystem;
-import org.andengine.entity.particle.emitter.PointParticleEmitter;
-import org.andengine.entity.particle.initializer.VelocityParticleInitializer;
-import org.andengine.entity.particle.modifier.AlphaParticleModifier;
 import org.andengine.entity.scene.CameraScene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.adt.color.Color;
 import org.andengine.util.math.MathUtils;
 import org.andengine.util.modifier.IModifier;
-
 import static com.opiumfive.gameofballs2.MainGameActivity.CAMERA_HEIGHT;
 import static com.opiumfive.gameofballs2.MainGameActivity.CAMERA_WIDTH;
 
@@ -71,8 +65,8 @@ public class MainGameScene extends CameraScene {
             }
         };
 
-        setOnAreaTouchListener(MainGameActivity.mTestActivity);
-        setOnSceneTouchListener(MainGameActivity.mTestActivity);
+        //setOnAreaTouchListener();
+        //setOnSceneTouchListener(MainGameActivity.mTestActivity);
 
         scaling.addModifierListener(entityModifierListener);
 
@@ -103,25 +97,36 @@ public class MainGameScene extends CameraScene {
 
     public void stopGame(){
         detachChildren();
-
         clearUpdateHandlers();
-
         unregisterUpdateHandler(timer);
     }
 
     private void loadNewTexture(){
         float width = MainGameActivity.mCircle.getWidth()/2.0f;
         float height = MainGameActivity.mCircle.getHeight()/2.0f;
-        final Sprite sprite = new Sprite(width +(CAMERA_WIDTH - width*2.0f)*MathUtils.RANDOM.nextFloat(),
-                height+(CAMERA_HEIGHT - height*2.0f)*MathUtils.RANDOM.nextFloat(), MainGameActivity.mCircle,
-                MainGameActivity.vertexBufferObjectManager);
-        registerTouchArea(sprite);
-        if (first) {sprite.registerEntityModifier(scaling); first=false;} else {
+        float postX = width +(CAMERA_WIDTH - width*2.0f)*MathUtils.RANDOM.nextFloat();
+        float postY = height+(CAMERA_HEIGHT - height*2.0f)*MathUtils.RANDOM.nextFloat();
+        Sprite sprite = new Sprite(postX, postY, MainGameActivity.mCircle, MainGameActivity.vertexBufferObjectManager) {
+            @Override
+            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+                if (pSceneTouchEvent.isActionDown()) {
+                    remove((Sprite) getParent());
+                }
+                return true;
+            }
+        };
+        attachChild(sprite);
+        if (first) {
+            sprite.registerEntityModifier(scaling);
+            first=false;
+        } else {
             scaling_copy=scaling.deepCopy();
             scaling_copy.addModifierListener(entityModifierListener);
             sprite.registerEntityModifier(scaling_copy);
         }
-        attachChild(sprite);
+
+        registerTouchArea(sprite);
+        setTouchAreaBindingOnActionDownEnabled(true);
     }
 
     /*public static void createExplosion(float pos_x,float pos_y){
@@ -145,14 +150,14 @@ public class MainGameScene extends CameraScene {
         }));
     }*/
 
-    public static void remove(final Sprite face) {
+    public void remove(final Sprite face) {
 
-        //unregisterTouchArea(face);
+        unregisterTouchArea(face);
         face.unregisterEntityModifier(scaling);
         //createExplosion(face.getX()+50,face.getY()+50);
         face.unregisterEntityModifier(scaling_copy);
         face.setIgnoreUpdate(true);
-        //detachChild(face);
+        detachChild(face);
     }
 
 

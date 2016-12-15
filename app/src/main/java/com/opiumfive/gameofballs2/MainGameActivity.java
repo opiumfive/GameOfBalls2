@@ -4,6 +4,8 @@ package com.opiumfive.gameofballs2;
 import com.opiumfive.gameofballs2.managers.SceneManager;
 import com.opiumfive.gameofballs2.scenes.MainGameScene;
 
+import org.andengine.engine.Engine;
+import org.andengine.engine.LimitedFPSEngine;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
@@ -21,7 +23,7 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 
-public class MainGameActivity extends SimpleBaseGameActivity implements IOnAreaTouchListener, IOnSceneTouchListener {
+public class MainGameActivity extends SimpleBaseGameActivity {//, IOnSceneTouchListener {
 
     public static MainGameActivity mTestActivity;
     public static Camera camera;
@@ -32,6 +34,11 @@ public class MainGameActivity extends SimpleBaseGameActivity implements IOnAreaT
 
     public BitmapTextureAtlas mBitmapTextureAtlas;
     public static ITextureRegion mCircle;
+
+    @Override
+    public Engine onCreateEngine(EngineOptions pEngineOptions) {
+        return new LimitedFPSEngine(pEngineOptions, 60);
+    }
 
     @Override
     protected void onCreateResources() {
@@ -58,7 +65,7 @@ public class MainGameActivity extends SimpleBaseGameActivity implements IOnAreaT
         return engineOptions;
     }
 
-    @Override
+    /*@Override
     public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
         if (pSceneTouchEvent.isActionDown()) {
             switch (SceneManager.state) {
@@ -69,18 +76,6 @@ public class MainGameActivity extends SimpleBaseGameActivity implements IOnAreaT
             return true;
         }
         return false;
-    }
+    }*/
 
-    @Override
-    public boolean onAreaTouched(TouchEvent pSceneTouchEvent, ITouchArea pTouchArea, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-        if (pSceneTouchEvent.isActionDown()) {
-            switch (SceneManager.state) {
-                case SceneManager.GAME:
-                        MainGameScene.remove((Sprite) pTouchArea);
-                        break;
-            }
-            return true;
-        }
-        return false;
-    }
 }
