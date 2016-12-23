@@ -1,51 +1,71 @@
 package com.opiumfive.gameofballs2.managers;
 
-import android.view.KeyEvent;
 
-import com.opiumfive.gameofballs2.MainGameActivity;
-import com.opiumfive.gameofballs2.scenes.MainGameScene;
+import com.opiumfive.gameofballs2.scenes.BaseScene;
+import com.opiumfive.gameofballs2.scenes.GameScene;
+import com.opiumfive.gameofballs2.scenes.MainMenuScene;
+import com.opiumfive.gameofballs2.scenes.SplashScene;
 
-import org.andengine.entity.scene.Scene;
-import org.andengine.input.touch.TouchEvent;
+public class SceneManager {
 
+    private static final SceneManager INSTANCE = new SceneManager();
 
+    public enum SceneType {SCENE_SPLASH, SCENE_MENU, SCENE_GAME}
 
-public class SceneManager extends Scene {
+    private BaseScene mSplashScene;
+    private BaseScene mMenuScene;
+    private BaseScene mGameScene;
 
-    public static MainGameScene mMainGameScene = new MainGameScene();
-    public static int state = 0 ;
-    public static final int GAME = 0;
+    private SceneType mCurrentSceneType;
+    private BaseScene mCurrentScene;
 
-    public SceneManager() {
-        attachChild(mMainGameScene);
-        ShowMainGameScene();
+    private SceneManager() {}
+
+    public static SceneManager getInstance() {
+        return INSTANCE;
     }
 
-    public static void ShowMainGameScene() {
-        mMainGameScene.Show();
-        state = GAME;
-    }
-
-    /*@Override
-    public boolean onSceneTouchEvent(TouchEvent pSceneTouchEvent) {
-        switch (state) {
-            case GAME:
-                MainGameActivity.mTestActivity.onSceneTouchEvent(mMainGameScene, pSceneTouchEvent);
+    public void setScene(SceneType sceneType) {
+        switch (sceneType) {
+            case SCENE_MENU:
+                setScene(createMenuScene());
+                break;
+            case SCENE_GAME:
+                setScene(createGameScene());
+                break;
+            case SCENE_SPLASH:
+                setScene(createSplashScene());
                 break;
         }
-        return super.onSceneTouchEvent(pSceneTouchEvent);
     }
 
-    public void KeyPressed(int keyCode, KeyEvent event) {
-        switch (state) {
-            case GAME:
-                if (keyCode == KeyEvent.KEYCODE_MENU){
+    private void setScene(BaseScene scene) {
+        ResourceManager.getInstance().mActivity.getEngine().setScene(scene);
+        mCurrentScene = scene;
+        mCurrentSceneType = scene.getSceneType();
+    }
 
-                }
-                if (keyCode == KeyEvent.KEYCODE_BACK){
+    public SceneType getCurrentSceneType() {
+        return mCurrentSceneType;
+    }
 
-                }
-                break;
-        }
-    }*/
+    public BaseScene getCurrentScene() {
+        return mCurrentScene;
+    }
+
+    public BaseScene createSplashScene() {
+        mSplashScene = new SplashScene();
+        return mSplashScene;
+    }
+
+    private BaseScene createMenuScene() {
+        mMenuScene = new MainMenuScene();
+        return mMenuScene;
+    }
+
+    private BaseScene createGameScene() {
+        mGameScene = new GameScene();
+        return mGameScene;
+    }
+
 }
