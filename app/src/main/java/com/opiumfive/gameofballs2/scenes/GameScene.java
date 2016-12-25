@@ -18,9 +18,6 @@ import org.andengine.util.math.MathUtils;
 
 public class GameScene extends BaseScene implements IOnSceneTouchListener, IOnAreaTouchListener {
 
-    Ball mBall;
-
-
     int counter = 0;
     int lastball = 0;
     int gameTime = 0;
@@ -35,6 +32,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener, IOnAr
 
         setOnSceneTouchListener(this);
         setOnAreaTouchListener(this);
+        setTouchAreaBindingOnActionDownEnabled(true);
 
         setBackground(new Background(Color.BLACK));
 
@@ -76,9 +74,8 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener, IOnAr
         float postX = width +(SCREEN_WIDTH - width*2.0f)* MathUtils.RANDOM.nextFloat();
         float postY = height+(SCREEN_HEIGHT - height*2.0f)*MathUtils.RANDOM.nextFloat();
         Ball ball = new Ball(postX, postY, mResourceManager.mBall, mVertexBufferObjectManager);
-        attachChild(ball);
         registerTouchArea(ball);
-        setTouchAreaBindingOnActionDownEnabled(true);
+        attachChild(ball);
     }
 
     public void remove(final Ball ball) {

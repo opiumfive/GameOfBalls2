@@ -31,7 +31,8 @@ public class Ball extends Sprite {
     }
 
     public void prepareRemove() {
-        setIgnoreUpdate(true);
+
         unregisterEntityModifier(mScaling);
+        setIgnoreUpdate(true);
     }
 }

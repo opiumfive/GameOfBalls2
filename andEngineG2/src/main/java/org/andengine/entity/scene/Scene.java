@@ -15,6 +15,7 @@ import org.andengine.util.Constants;
 import org.andengine.util.adt.list.SmartList;
 import org.andengine.util.color.Color;
 
+import android.content.pm.PackageInfo;
 import android.util.SparseArray;
 
 /**
@@ -348,21 +349,29 @@ public class Scene extends Entity {
 
 		final SmartList<ITouchArea> touchAreas = this.mTouchAreas;
 		if(touchAreas != null) {
-			final int touchAreaCount = touchAreas.size();
+			int touchAreaCount = touchAreas.size();
 			if(touchAreaCount > 0) {
 				if(this.mOnAreaTouchTraversalBackToFront) { /* Back to Front. */
+					touchAreaCount = touchAreas.size();
 					for(int i = 0; i < touchAreaCount; i++) {
-						final ITouchArea touchArea = touchAreas.get(i);
-						if(touchArea.contains(sceneTouchEventX, sceneTouchEventY)) {
-							final Boolean handled = this.onAreaTouchEvent(pSceneTouchEvent, sceneTouchEventX, sceneTouchEventY, touchArea);
-							if(handled != null && handled) {
+						ITouchArea touchArea = null;
+						if (i < touchAreas.size()) {
+							touchArea = touchAreas.get(i);
+						}
+						if (touchArea != null) {
+							if (touchArea.contains(sceneTouchEventX, sceneTouchEventY)) {
+								final Boolean handled = this.onAreaTouchEvent(pSceneTouchEvent, sceneTouchEventX, sceneTouchEventY, touchArea);
+								if (handled != null && handled) {
 								/* If binding of ITouchAreas is enabled and this is an ACTION_DOWN event,
 								 *  bind this ITouchArea to the PointerID. */
-								if((this.mTouchAreaBindingOnActionDownEnabled && isActionDown) || (this.mTouchAreaBindingOnActionMoveEnabled && isActionMove)) {
-									this.mTouchAreaBindings.put(pSceneTouchEvent.getPointerID(), touchArea);
+									if ((this.mTouchAreaBindingOnActionDownEnabled && isActionDown) || (this.mTouchAreaBindingOnActionMoveEnabled && isActionMove)) {
+										this.mTouchAreaBindings.put(pSceneTouchEvent.getPointerID(), touchArea);
+									}
+									return true;
 								}
-								return true;
 							}
+						} else {
+							return false;
 						}
 					}
 				} else { /* Front to back. */

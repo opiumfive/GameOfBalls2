@@ -1,8 +1,12 @@
 package com.opiumfive.gameofballs2;
 
+import android.os.Bundle;
+import android.view.View;
+
 import com.opiumfive.gameofballs2.managers.ResourceManager;
 import com.opiumfive.gameofballs2.managers.SceneManager;
 
+import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -25,6 +29,7 @@ public class GameActivity extends SimpleBaseGameActivity {
 
     @Override
     public EngineOptions onCreateEngineOptions() {
+
         mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
         final EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED, new FillResolutionPolicy(), mCamera);
         //engineOptions.getAudioOptions().setNeedsSound(true).setNeedsMusic(true);
