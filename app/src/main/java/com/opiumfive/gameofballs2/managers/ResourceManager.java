@@ -21,6 +21,7 @@ public class ResourceManager {
     public ITextureRegion mSplashTextureRegion;
     private BitmapTextureAtlas mBitmapTextureAtlas;
     public ITextureRegion mBall;
+    public ITextureRegion mParticle;
     public Font mFont1;
     public Font mFont2;
     public Font mFont3;
@@ -68,11 +69,13 @@ public class ResourceManager {
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
         mBitmapTextureAtlas = new BitmapTextureAtlas(mActivity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
         mBall = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mBitmapTextureAtlas, mActivity, "2.png", 0, 0);
+        mParticle = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mBitmapTextureAtlas, mActivity, "exp.png", 0, 200);
         mBitmapTextureAtlas.load();
     }
 
     public void unloadGameResources() {
         mBitmapTextureAtlas.unload();
         mBall = null;
+        mParticle = null;
     }
 }
