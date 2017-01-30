@@ -34,7 +34,8 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener, IOnAr
         setOnAreaTouchListener(this);
         setTouchAreaBindingOnActionDownEnabled(true);
 
-        setBackground(new Background(Color.BLACK));
+        setBackgroundEnabled(true);
+        setBackground(new Background(new Color(0.22f, 0.22f, 0.22f, 1f)));
 
 
 
