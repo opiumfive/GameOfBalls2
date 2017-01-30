@@ -37,8 +37,6 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener, IOnAr
         setBackgroundEnabled(true);
         setBackground(new Background(new Color(0.22f, 0.22f, 0.22f, 1f)));
 
-
-
         registerUpdateHandler(new IUpdateHandler() {
 
             @Override
