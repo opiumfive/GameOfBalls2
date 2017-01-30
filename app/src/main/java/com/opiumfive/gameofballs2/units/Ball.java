@@ -34,5 +34,6 @@ public class Ball extends Sprite {
 
         unregisterEntityModifier(mScaling);
         setIgnoreUpdate(true);
+
     }
 }
