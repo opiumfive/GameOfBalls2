@@ -1,15 +1,16 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 15
-    buildToolsVersion '27.0.3'
+    compileSdkVersion 23
+    useLibrary  'org.apache.http.legacy'
 
     defaultConfig {
-        minSdkVersion 8
-        targetSdkVersion 8
+        minSdkVersion 14
+        targetSdkVersion 23
 
         ndk {
             moduleName "andengine_shared"
+            abiFilters 'x86', 'x86_64', 'armeabi', 'armeabi-v7a', 'arm64-v8a'
         }
     }
 
